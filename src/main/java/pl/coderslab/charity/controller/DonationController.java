@@ -48,4 +48,9 @@ public class DonationController {
         return "form-confirmation";
     }
 
+    @RequestMapping("/")
+    public String mainDonationPage(){
+        return "donation";
+    }
+
 }

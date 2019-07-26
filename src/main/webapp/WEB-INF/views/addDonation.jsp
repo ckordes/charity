@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
 </head>
 <body>
-<%@include file="header.jsp" %>
+<%@include file="headerForm.jsp" %>
 
 <section>
     <form:form modelAttribute="donation" method="post">
