@@ -18,14 +18,20 @@
 <%@include file="headerForm.jsp" %>
 
 <nav class="container container--70">
+    <h2>Edytuj instytucje</h2>
     <section>
-        <a href="/donation/" class="btn btn--without-border active">Strona z darowiznami</a>
-    </section>
-    <section>
-        <a href="manageInstitutions" class="btn btn--without-border active">Zarzadzaj instytucjami</a>
-    </section>
-    <section>
-        <a href="manageAdmins" class="btn btn--without-border active">Zarzadzaj Administratorami</a>
+        <form:form modelAttribute="institution" method="post">
+            <form:hidden path="id"/>
+            <div class="form-group">
+                Nazwa Instytucji: <form:input path="name" placeholder="${institution.name}"/><br/>
+                Opis Instytucji: <form:input path="description" placeholder="${institution.description}"/>
+            </div>
+
+            <div class="form-group form-group--buttons">
+                <input type="submit" class="btn btn--without-border" value="Zapisz zmiany"  >
+            </div>
+        </form:form>
+
     </section>
 </nav>
 
