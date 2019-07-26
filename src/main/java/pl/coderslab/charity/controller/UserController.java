@@ -69,11 +69,14 @@ public class UserController {
         if (validationService.validateUser(loginMode.getEmail(),loginMode.getPassword())){
             User user = userRepository.findByUsername(loginMode.getEmail());
             String loggedUser = "USER";
-            if (user.getRoles().contains("ADMIN")) {
-                loggedUser = "ADMIN";
-                httpSession.setAttribute("loggedUser", loggedUser);
-                return "redirect:/admin/";
+            for (Role role :user.getRoles()){
+                if (role.getName().equals("ADMIN")) {
+                    loggedUser = "ADMIN";
+                    httpSession.setAttribute("loggedUser", loggedUser);
+                    return "redirect:/admin/";
+                }
             }
+
             httpSession.setAttribute("loggedUser", loggedUser);
             return "redirect:/donation/";
         }

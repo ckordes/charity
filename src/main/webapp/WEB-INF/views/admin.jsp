@@ -41,14 +41,17 @@
 </head>
 <body>
 <%@include file="headerForm.jsp" %>
+
 <nav class="container container--70">
-<section>
-    <a href="add" class="btn btn--without-border active">Zloz darowizne</a>
-</section>
+    <section>
+        <a href="/donation/" class="btn btn--without-border active">Strona z darowiznami</a>
+    </section>
 </nav>
+
 <%@include file="footer.jsp" %>
 
 <script src="<c:url value="/resources/js/app.js"/>"></script>
 </body>
 </html>
+
 

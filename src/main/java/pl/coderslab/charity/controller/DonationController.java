@@ -35,6 +35,7 @@ public class DonationController {
         return institutionRepository.findAll();
     }
 
+
     @GetMapping("/add")
     public String addDonation(Model model){
         Donation donation = new Donation();
