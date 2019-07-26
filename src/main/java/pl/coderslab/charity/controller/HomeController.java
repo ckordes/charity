@@ -21,8 +21,8 @@ public class HomeController {
     @Autowired
     DonationRepository donationRepository;
 
-    @ModelAttribute ("institutions")
-    public List<Institution> institutions(){
+    @ModelAttribute("institutions")
+    public List<Institution> institutions() {
         return institutionRepository.findAll();
 //        List<Institution> institutions = new ArrayList<>();
 //        institutions.add(new Institution("test", "testdescription"));
@@ -31,30 +31,29 @@ public class HomeController {
 //        institutions.add(new Institution("czwarta", "drugadescription"));
 //        return institutions;
     }
+
     @ModelAttribute("donationsCount")
-    public long donationsCount(){
+    public long donationsCount() {
         return donationRepository.donationCount();
     }
+
     @ModelAttribute("quaintityCount")
-    public long quantityCount(){
+    public long quantityCount() {
         return donationRepository.quantityCount();
     }
+
     @ModelAttribute("institutionsCount")
-    public long institutionsCount(){
-        return institutionRepository.institutionCount();
+    public long institutionsCount() {
+        List<Institution> institutions = donationRepository.sumSupportedInstitutions();
+        long institutionsCount = institutions.size();
+        return institutionsCount;
     }
 
-
     @RequestMapping("/")
-    public String homeAction(Model model){
+    public String homeAction(Model model) {
         return "index";
     }
 }
-
-
-
-
-
 
 
 /*
