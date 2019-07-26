@@ -18,15 +18,20 @@
 <%@include file="headerForm.jsp" %>
 
 <nav class="container container--70">
+    <h2>Dodaj instytucje</h2>
     <section>
-        <a href="/donation/" class="btn btn--without-border active">Strona z darowiznami</a>
+        <a href="add" class="btn btn--without-border active">Dodaj Instytucje</a>
     </section>
-    <section>
-        <a href="manageInstitutions" class="btn btn--without-border active">Zarzadzaj instytucjami</a>
-    </section>
-    <section>
-        <a href="manageAdmins" class="btn btn--without-border active">Zarzadzaj Administratorami</a>
-    </section>
+</nav>
+
+<nav class="container container--70">
+    <h2>Zarzadzaj Instytucjami</h2>
+
+    <c:forEach items="${allInstitutions}" var="institution">
+        <a href = "edit/${institution.id}" class="btn btn--without-border active">Edytuj ${institution.name}</a>
+        <a href="delete/${institution.id}" class="btn btn--without-border active">Usun ${institution.name}</a><br/>
+    </c:forEach>
+
 </nav>
 
 <%@include file="footer.jsp" %>
