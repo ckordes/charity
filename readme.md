@@ -12,5 +12,3 @@ Przed przystąpieniem do pracy  przeczytaj poniższe wskazówki.
 	* Wybieramy kolejno opcje: `Next –> Next –> Next –> Finish`
 
 
-
-
