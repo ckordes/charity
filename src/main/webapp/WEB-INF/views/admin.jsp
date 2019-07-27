@@ -27,6 +27,9 @@
     <section>
         <a href="manageAdmins" class="btn btn--without-border active">Zarzadzaj Administratorami</a>
     </section>
+    <section>
+        <a href="manageUsers" class="btn btn--without-border active">Zarzadzaj Uzytkownikami</a>
+    </section>
 </nav>
 
 <%@include file="footer.jsp" %>

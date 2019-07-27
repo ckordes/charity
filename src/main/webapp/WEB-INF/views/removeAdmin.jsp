@@ -18,9 +18,10 @@
 <%@include file="headerForm.jsp" %>
 
 <nav class="container container--70">
-    <h2>Usun Uprawnienia Administratora</h2>
+    <h2>Modyfikacja Administratora</h2>
     <section>
         <c:forEach items="${usersAdmins}" var="admin">
+            <a href="editAdmin/${admin.id}">Modyfikuj Administratora</a>
             <a href="removeAdmin/${admin.id}">Usun uprawnienia dla: ${admin.firstName}, ${admin.lastName} </a><br/>
         </c:forEach>
     </section>
