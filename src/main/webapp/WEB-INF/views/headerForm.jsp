@@ -9,8 +9,8 @@
         <ul class="nav--actions">
             <li class="logged-user">
                 <ul class="dropdown">
-                    <li><a href="#">Profil</a></li>
-                    <li><a href="#">Ustawienia</a></li>
+                    <li><a href="/displayUser">Profil</a></li>
+                    <li><a href="/editUser">Ustawienia</a></li>
                     <li><a href="#">Moje zbiórki</a></li>
                     <li><a href="#">Wyloguj</a></li>
                 </ul>

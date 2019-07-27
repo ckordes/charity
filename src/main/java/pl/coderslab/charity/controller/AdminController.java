@@ -1,6 +1,5 @@
 package pl.coderslab.charity.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +11,6 @@ import pl.coderslab.charity.repository.InstitutionRepository;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
 
-import javax.jws.WebParam;
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -32,6 +29,13 @@ public class AdminController {
     @ModelAttribute("allInstitutions")
     public List<Institution> allInstitutions() {
         return institutionRepository.findAll();
+    }
+    @ModelAttribute("usersNoAdmins")
+    public List<User> noAdmins(){
+        List<User> usersAdmins = userRepository.findAllAdmins();
+        List<User> usersNoAdmins = userRepository.findAllUsers();
+        usersNoAdmins.removeAll(usersAdmins);
+        return usersNoAdmins;
     }
 
     @RequestMapping("/")
@@ -82,11 +86,7 @@ public class AdminController {
     }
 
     @RequestMapping("/addAdmin")
-    public String addAdmin(Model model) {
-        List<User> usersAdmins = userRepository.findAllAdmins();
-        List<User> usersNoAdmins = userRepository.findAllUsers();
-        usersNoAdmins.removeAll(usersAdmins);
-        model.addAttribute("usersNoAdmins", usersNoAdmins);
+    public String addAdmin() {
         return "addAdmin";
     }
 
@@ -118,6 +118,50 @@ public class AdminController {
         userRoles.remove(role);
         userRepository.save(user);
         return "redirect:../manageAdmins";
+    }
+
+    @GetMapping("/editAdmin/{id}")
+    public String editAdmin(Model model,@PathVariable long id){
+        Optional<User> optionalUser = userRepository.findById(id);
+        User user = optionalUser.get();
+        model.addAttribute("user",user);
+        return "editAdmin";
+    }
+    @PostMapping("/editAdmin/{id}")
+    public String editAdmin(@ModelAttribute ("user") User user) {
+        Optional<User> optionalUser = userRepository.findById(user.getId());
+        Set<Role> roles = optionalUser.get().getRoles();
+        user.setRoles(roles);
+        userRepository.save(user);
+        return "redirect:../manageAdmins";
+    }
+
+    @RequestMapping("/manageUsers")
+    public String manageUsers (){
+        return "manageUsers";
+    }
+
+    @RequestMapping("/removeUser/{id}")
+    public String removeUser(@PathVariable long id){
+        Optional<User> optionalUser = userRepository.findById(id);
+        userRepository.delete(optionalUser.get());
+        return "redirect:../manageUsers";
+    }
+
+    @GetMapping("/editUser/{id}")
+    public String editUser(@PathVariable long id, Model model){
+        Optional<User> optionalUser = userRepository.findById(id);
+        model.addAttribute("user",optionalUser.get());
+        return "editUser";
+    }
+
+    @PostMapping("/editUser/{id}")
+    public String editUser(@ModelAttribute User user){
+        Optional<User> optionalUser = userRepository.findById(user.getId());
+        Set<Role> roles = optionalUser.get().getRoles();
+        user.setRoles(roles);
+        userRepository.save(user);
+        return "redirect:../manageUsers";
     }
 
 }

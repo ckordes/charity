@@ -17,19 +17,15 @@
 <body>
 <%@include file="headerForm.jsp" %>
 
-<nav class="container container--70">
-    <h2>Dodaj Administratora</h2>
-    <section>
-        <a href="addAdmin" class="btn btn--without-border active">Dodaj Administratora</a>
-    </section>
-</nav>
 
 <nav class="container container--70">
-    <h2>Usun/Modyfikuj Administratora</h2>
-    <section>
-        <a href="removeAdmin" class="btn btn--without-border active">Usun/Modyfikuj Administratora</a>
+    <h2>Usun/Modyfikuj Użytkownika</h2>
 
-    </section>
+    <c:forEach items="${usersNoAdmins}" var="user">
+        <a href="editUser/${user.id}">Modyfikuj Uzytkownika</a>
+        <a href="removeUser/${user.id}">Usun Uzytkownika: ${user.firstName}, ${user.lastName} </a><br/>
+    </c:forEach>
+
 </nav>
 
 <%@include file="footer.jsp" %>

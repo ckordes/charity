@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -18,17 +17,18 @@
 <%@include file="headerForm.jsp" %>
 
 <nav class="container container--70">
-    <h2>Dodaj Administratora</h2>
+    <h2>Dane Uzytkownika</h2>
     <section>
-        <a href="addAdmin" class="btn btn--without-border active">Dodaj Administratora</a>
-    </section>
-</nav>
+        <div class="form-group">
+            Imie: ${user.firstName}<br/>
+            Nazwisko: ${user.lastName}<br/>
+            Email: ${user.username}<br/>
+            Role: <br/>
+            <c:forEach items="${user.roles}" var="role">
+                ${role.name}<br/>
+            </c:forEach>
 
-<nav class="container container--70">
-    <h2>Usun/Modyfikuj Administratora</h2>
-    <section>
-        <a href="removeAdmin" class="btn btn--without-border active">Usun/Modyfikuj Administratora</a>
-
+        </div>
     </section>
 </nav>
 

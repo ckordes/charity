@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -18,17 +17,25 @@
 <%@include file="headerForm.jsp" %>
 
 <nav class="container container--70">
-    <h2>Dodaj Administratora</h2>
+    <h2>Modyfikuj Dane Administratora</h2>
     <section>
-        <a href="addAdmin" class="btn btn--without-border active">Dodaj Administratora</a>
-    </section>
-</nav>
+        <form:form method="post" modelAttribute="user">
+            <form:hidden path="id"/>
+            <form:hidden path="password"/>
+            <div class="form-group">
+            Email: <form:input path="username"/><br/>
+            Imie: <form:input path="firstName"/><br/>
+            Nazwisko: <form:input path="lastName"/><br/>
+            Uzytkownik:<br/>
+            Aktywny <form:radiobutton path="enabled" value="1" checked="true"/>
+            Zablokowany <form:radiobutton path="enabled" value="0"/>
+            </div>
 
-<nav class="container container--70">
-    <h2>Usun/Modyfikuj Administratora</h2>
-    <section>
-        <a href="removeAdmin" class="btn btn--without-border active">Usun/Modyfikuj Administratora</a>
+            <div class="form-group form-group--buttons">
+                <input type="submit" class="btn btn--without-border" value="Zapisz Modyfikacje"  >
+            </div>
 
+        </form:form>
     </section>
 </nav>
 
