@@ -23,4 +23,8 @@ public interface DonationRepository extends JpaRepository<Donation,Long> {
     @Query("SELECT DISTINCT(d.institution) FROM Donation d")
     List<Institution> sumSupportedInstitutions();
 
+    @Query (value = "select * from donation d inner join donation_status ds on ds.id = d.donation_status_id inner join user u on u.id = ds.user_id where u.id = ? order by ds.picked_up_date desc, ds.created_date_entry desc ;",
+            nativeQuery = true)
+    List<Donation> findAllMyDonations (long id);
+
 }

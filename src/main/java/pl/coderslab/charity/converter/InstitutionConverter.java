@@ -7,7 +7,7 @@ import pl.coderslab.charity.repository.InstitutionRepository;
 
 public class InstitutionConverter implements Converter<String, Institution> {
     @Autowired
-    InstitutionRepository institutionRepository;
+    private InstitutionRepository institutionRepository;
 
     @Override
     public Institution convert(String s){

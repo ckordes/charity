@@ -4,8 +4,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Entity
@@ -27,11 +27,8 @@ public class Donation {
     @DateTimeFormat(pattern = "HH:mm")
     private LocalTime pickUpTime;
     private String pickUpComment;
-
-    /*
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-  private LocalDate pickUpDate;
-     */
+    @OneToOne
+    private DonationStatus donationStatus;
 
     public Donation() {
     }
@@ -114,6 +111,14 @@ public class Donation {
 
     public void setPickUpComment(String pickUpComment) {
         this.pickUpComment = pickUpComment;
+    }
+
+    public DonationStatus getDonationStatus() {
+        return donationStatus;
+    }
+
+    public void setDonationStatus(DonationStatus donationStatus) {
+        this.donationStatus = donationStatus;
     }
 }
 

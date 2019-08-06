@@ -22,11 +22,11 @@ import java.util.Set;
 @Controller
 public class UserController {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
     @Autowired
-    ValidationService validationService;
+    private ValidationService validationService;
 
     @GetMapping("/register")
     public String register(Model model){

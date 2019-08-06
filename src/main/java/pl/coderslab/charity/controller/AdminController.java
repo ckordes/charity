@@ -20,11 +20,11 @@ import java.util.Set;
 public class AdminController {
 
     @Autowired
-    InstitutionRepository institutionRepository;
+    private InstitutionRepository institutionRepository;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @ModelAttribute("allInstitutions")
     public List<Institution> allInstitutions() {
