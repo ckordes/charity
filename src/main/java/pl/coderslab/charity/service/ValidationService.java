@@ -8,7 +8,7 @@ import pl.coderslab.charity.repository.UserRepository;
 @Service
 public class ValidationService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     public boolean validateEmail(String email){
         User user = userRepository.findByUsername(email);

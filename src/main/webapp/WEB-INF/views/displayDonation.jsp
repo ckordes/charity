@@ -17,15 +17,16 @@
 <%@include file="headerForm.jsp" %>
 
 <nav class="container container--70">
-    <h2>Dane Uzytkownika</h2>
+    <h2>Szczegoly Dotacji</h2>
     <section>
         <div class="form-group">
-            Imie: ${user.firstName}<br/>
-            Nazwisko: ${user.lastName}<br/>
-            Email: ${user.username}<br/>
-            Role: <br/>
-            <c:forEach items="${user.roles}" var="role">
-                ${role.name}<br/>
+            Organizacja: ${donation.institution.name}<br/>
+            Data utworzenia wpisu: ${donation.donationStatus.createdDateEntry}<br/>
+            Data przekazania daru: ${donation.donationStatus.pickedUpDate}<br/>
+            Ilosc: ${donation.quantity}<br/>
+            Kategorie: <br/>
+            <c:forEach items="${donation.categories}" var="category">
+               - ${category.name}<br/>
             </c:forEach>
         </div>
     </section>

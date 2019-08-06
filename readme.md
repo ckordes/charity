@@ -1,14 +1,8 @@
-<img alt="Logo" src="http://coderslab.pl/svg/logo-coderslab.svg" width="400">
+Charity project.
 
+Aim:
+Create a place where everyone can give unwanted things to trusted institutions.
 
-Przed przystąpieniem do pracy  przeczytaj poniższe wskazówki.
-## Jak zacząć?
-
-1. Zaimportuj projekt jako projekt `Maven`, wg poniższych wskazówek:
-
-	* W `IntelliJ` wybieramy: `File –> New –> Project from Existing Sources...`
-	* Wskazujemy lokalizację katalogu ze sklonowanym projektem i zatwierdzamy.
-	* Następnie w nowym oknie wybieramy: `Import project from external model` i wskazujemy `Maven`
-	* Wybieramy kolejno opcje: `Next –> Next –> Next –> Finish`
-
-
+Description:
+With the application, user will have a chance to pick trusted institution, select which goods she/he wants to give away,
+set time and place for pick up and select institution to which she/he would like to give donation to.

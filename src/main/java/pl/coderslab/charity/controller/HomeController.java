@@ -17,9 +17,9 @@ import java.util.List;
 @Controller
 public class HomeController {
     @Autowired
-    InstitutionRepository institutionRepository;
+    private InstitutionRepository institutionRepository;
     @Autowired
-    DonationRepository donationRepository;
+    private DonationRepository donationRepository;
 
     @ModelAttribute("institutions")
     public List<Institution> institutions() {

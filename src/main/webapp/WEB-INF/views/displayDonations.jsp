@@ -17,15 +17,15 @@
 <%@include file="headerForm.jsp" %>
 
 <nav class="container container--70">
-    <h2>Dane Uzytkownika</h2>
+    <h2>Lista Dotacji</h2>
     <section>
         <div class="form-group">
-            Imie: ${user.firstName}<br/>
-            Nazwisko: ${user.lastName}<br/>
-            Email: ${user.username}<br/>
-            Role: <br/>
-            <c:forEach items="${user.roles}" var="role">
-                ${role.name}<br/>
+            <c:forEach items="${donationList}" var="donation" varStatus="donationCount">
+                ${donationCount.count}<br/>
+               Odebrano: ${donation.donationStatus.pickedUp},<br/>
+                Data odebrania: ${donation.donationStatus.pickedUpDate}<br/>
+                <a href="displayDonation/${donation.id}">Wyswietl szczegoly.</a><br/>
+                <br/>
             </c:forEach>
         </div>
     </section>
