@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.charity.emailService.EmailServiceImpl;
 import pl.coderslab.charity.entity.*;
 import pl.coderslab.charity.repository.*;
 
@@ -27,6 +28,8 @@ public class DonationController {
     private UserRepository userRepository;
     @Autowired
     private DonationStatusRepository donationStatusRepository;
+    @Autowired
+    private EmailServiceImpl emailService;
 
     @ModelAttribute("allCategories")
     public List<Category> allCategories(){
@@ -73,11 +76,22 @@ public class DonationController {
         return "displayDonations";
     }
 
-    @RequestMapping("/displayDonation/{id}")
+    @GetMapping("/displayDonation/{id}")
     public String displayDonation(@PathVariable long id, Model model){
         Donation donation =donationRepository.findById(id);
+        DonationStatus donationStatus = donation.getDonationStatus();
         model.addAttribute("donation",donation);
+        model.addAttribute("donationStatus",donationStatus);
         return "displayDonation";
+    }
+
+    @PostMapping("/displayDonation/{id}")
+    public String displayDonation(@ModelAttribute Donation donation, @ModelAttribute DonationStatus donationStatus, HttpSession httpSession){
+        Optional<User> optionalUser = userRepository.findById((long) httpSession.getAttribute("loggedUserId"));
+        User user = optionalUser.get();
+        donationStatus.setUser(user);
+        donationStatusRepository.save(donationStatus);
+       return "redirect:../displayDonations";
     }
 
 

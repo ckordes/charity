@@ -28,6 +28,16 @@
             <c:forEach items="${donation.categories}" var="category">
                - ${category.name}<br/>
             </c:forEach>
+            <c:if test="${not donationStatus.pickedUp}">
+                <form:form method="post" modelAttribute="donationStatus">
+                    <form:hidden path="id"/>
+                    <form:hidden path="createdDateEntry"/>
+                    Odebrano Tak/Nie: <form:checkbox path="pickedUp"/>
+                    <input type="submit" value="Zapisz">
+                </form:form>
+            </c:if>
+
+
         </div>
     </section>
 </nav>

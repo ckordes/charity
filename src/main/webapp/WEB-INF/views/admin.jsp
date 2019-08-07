@@ -21,6 +21,10 @@
     <section>
         <a href="/donation/" class="btn btn--without-border active">Strona z darowiznami</a>
     </section>
+
+
+
+
     <section>
         <a href="manageInstitutions" class="btn btn--without-border active">Zarzadzaj instytucjami</a>
     </section>

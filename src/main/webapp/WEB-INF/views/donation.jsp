@@ -45,6 +45,9 @@
 <section>
     <a href="add" class="btn btn--without-border active">Zloz darowizne</a>
 </section>
+    <section>
+        <a href="displayDonations/" class="btn btn--without-border active">Strona ze szegolami przekazanych darowizn</a>
+    </section>
 </nav>
 <%@include file="footer.jsp" %>
 
