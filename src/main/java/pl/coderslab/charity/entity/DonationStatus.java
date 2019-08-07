@@ -19,6 +19,9 @@ public class DonationStatus {
         createdDateEntry = LocalDate.now();
     }
 
+    @PreUpdate
+    public void pickedUpOn(){pickedUpDate = LocalDate.now();}
+
     public long getId() {
         return id;
     }

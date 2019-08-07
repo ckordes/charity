@@ -24,7 +24,7 @@
                 ${donationCount.count}<br/>
                Odebrano: ${donation.donationStatus.pickedUp},<br/>
                 Data odebrania: ${donation.donationStatus.pickedUpDate}<br/>
-                <a href="displayDonation/${donation.id}">Wyswietl szczegoly.</a><br/>
+                <a href="/donation/displayDonation/${donation.id}">Wyswietl szczegoly.</a><br/>
                 <br/>
             </c:forEach>
         </div>
