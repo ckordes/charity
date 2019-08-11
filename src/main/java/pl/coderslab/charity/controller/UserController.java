@@ -3,16 +3,15 @@ package pl.coderslab.charity.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import pl.coderslab.charity.emailService.EmailServiceImpl;
 import pl.coderslab.charity.entity.Role;
 import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.pojo.LoginMode;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
 import pl.coderslab.charity.service.ValidationService;
+import pl.coderslab.charity.service.VerificationTokenService;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
@@ -27,6 +26,10 @@ public class UserController {
     private RoleRepository roleRepository;
     @Autowired
     private ValidationService validationService;
+    @Autowired
+    private EmailServiceImpl emailServiceImpl;
+    @Autowired
+    private VerificationTokenService verificationTokenService;
 
     @GetMapping("/register")
     public String register(Model model){
@@ -48,14 +51,12 @@ public class UserController {
         if (validationService.validateEmail(user.getUsername())){
             return "register";
         }
-        String loggedUser = "USER";
-
-        httpSession.setAttribute("loggedUser",loggedUser);
         Set<Role> roles = new HashSet<>();
         roles.add(roleRepository.findByName("USER"));
         user.setRoles(roles);
-        user.setEnabled(1);
+        user.setEnabled(0);
         userRepository.save(user);
+        verificationTokenService.generateTokenForConfirmation(user);
         return "redirect:/donation/";
     }
 
@@ -68,19 +69,23 @@ public class UserController {
 
     @PostMapping ("/login")
     public String login(@ModelAttribute ("loginMode") LoginMode loginMode, HttpSession httpSession){
-        if (validationService.validateUser(loginMode.getEmail(),loginMode.getPassword())){
+        if (validationService.validateUser(loginMode.getEmail(),loginMode.getPassword())) {
             User user = userRepository.findByUsername(loginMode.getEmail());
-            httpSession.setAttribute("loggedUserId",user.getId());
-            String loggedUser = "USER";
-            for (Role role :user.getRoles()){
-                if (role.getName().equals("ADMIN")) {
-                    loggedUser = "ADMIN";
-                    httpSession.setAttribute("loggedUser", loggedUser);
-                    return "redirect:/admin/";
+            if (user.getEnabled() == 1) {
+                httpSession.setAttribute("loggedUserId", user.getId());
+                String loggedUser = "USER";
+                for (Role role : user.getRoles()) {
+                    if (role.getName().equals("ADMIN")) {
+                        loggedUser = "ADMIN";
+                        httpSession.setAttribute("loggedUser", loggedUser);
+                        return "redirect:/admin/";
+                    }
                 }
+                httpSession.setAttribute("loggedUser", loggedUser);
+                return "redirect:/donation/";
+            }else {
+                return "userNotActive";
             }
-            httpSession.setAttribute("loggedUser", loggedUser);
-            return "redirect:/donation/";
         }
         return "login";
     }
@@ -111,6 +116,21 @@ public class UserController {
             return "displayUser";
         }
         return "redirect:login";
+    }
+
+    @RequestMapping("/confirmRegistration")
+    public String confirmRegistration(@RequestParam (name="token") String token){
+        if (verificationTokenService.verifyUserToken(token)){
+            return "redirect:/login";
+        }
+        return "incorrectToken";
+    }
+
+    @RequestMapping("/loggedOut")
+    public String loggedOut(HttpSession httpSession){
+        httpSession.removeAttribute("loggedUserId");
+        httpSession.removeAttribute("loggedUser");
+        return "redirect:/";
     }
 
 }

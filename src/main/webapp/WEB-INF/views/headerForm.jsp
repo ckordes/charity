@@ -12,7 +12,7 @@
                     <li><a href="/displayUser">Profil</a></li>
                     <li><a href="/editUser">Ustawienia</a></li>
                     <li><a href="#">Moje zbiórki</a></li>
-                    <li><a href="#">Wyloguj</a></li>
+                    <li><a href="/loggedOut">Wyloguj</a></li>
                 </ul>
             </li>
         </ul>
