@@ -47,4 +47,6 @@ public class HomeController {
     public String homeAction(Model model) {
         return "index";
     }
+
+
 }
