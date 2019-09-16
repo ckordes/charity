@@ -40,41 +40,13 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
 </head>
 <body>
-<%@include file="headerForm.jsp" %>
-
-<section>
-    <form:form modelAttribute="donation" method="post">
-        Ilosc: <form:input path="quantity" id="quantity"/><br />
-        Kategorie: <form:checkboxes path="categories" items="${allCategories}" itemLabel="name" itemValue="id" multiple="true" id="categories"/><br/>
-        Instytucja: <form:select path="institution" items="${allInstitutions}" itemLabel="name" itemValue="id" id="institution"/><br/>
-        Ulica: <form:input path="street" id="street"/><br />
-        Miasto: <form:input path="city" id="city"/><br/>
-        Kod Pocztowy: <form:input path="zipCode" id="zipCode"/><br/>
-        Data podjecia: <form:input path="pickUpDate" type="date" id="pickUpDate"/><br/>
-        Godzina podjecia: <form:input path="pickUpTime" type="time" id="pickUpTime"/><br/>
-        Komentarz: <form:textarea path="pickUpComment" id="pickUpComment"/><br/>
-        <input type="submit" value="Zapisz">
-    </form:form>
-</section>
-
-
-<%--<section>--%>
-<%--    <h4>Podsumowanie</h4>--%>
-
-<%--    Ilosc: <p id="quantity1"> </p>--%>
-<%--    Kategorie: <p id="categories1"> </p>--%>
-<%--    Instytucja: <p id="institution1"> </p>--%>
-<%--    Ulica: <p id="street1"> </p>--%>
-<%--    Miasto: <p id="city1"> </p>--%>
-<%--    Kod Pocztowy: <p id="zipCode1"> </p>--%>
-<%--    Data podjecia: <p id="pickUpDate1"> </p>--%>
-<%--    Godzina Podjecia: <p id="pickUpTime1"> </p>--%>
-<%--    Komentarz: <p id="pickUpComment1"> </p>--%>
-
-<%--</section>--%>
-
+<%--<%@include file="headerForm.jsp" %>--%>
+<nav class="container container--70">
+<h2>Uzytkownik nie aktywny. Prosze aktywowac użytkownika poprzez kliknięcie w link aktywacyjny wysłany na podany adres email!</h2>
+</nav>
 <%@include file="footer.jsp" %>
 
 <script src="<c:url value="/resources/js/app.js"/>"></script>
 </body>
 </html>
+
