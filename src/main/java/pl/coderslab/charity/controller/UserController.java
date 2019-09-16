@@ -32,23 +32,23 @@ public class UserController {
     private VerificationTokenService verificationTokenService;
 
     @GetMapping("/register")
-    public String register(Model model){
+    public String register(Model model) {
         User user = new User();
-        String password2 ="";
+        String password2 = "";
         String error = "";
-        model.addAttribute("user",user);
-        model.addAttribute("password2",password2);
-        model.addAttribute("error",error);
+        model.addAttribute("user", user);
+        model.addAttribute("password2", password2);
+        model.addAttribute("error", error);
         return "register";
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute User user, @ModelAttribute ("password2") String password2, HttpSession httpSession){
+    public String register(@ModelAttribute User user, @ModelAttribute("password2") String password2, HttpSession httpSession) {
 
-        if (!user.getPassword().equals(password2)){
+        if (!user.getPassword().equals(password2)) {
             return "register";
         }
-        if (validationService.validateEmail(user.getUsername())){
+        if (validationService.validateEmail(user.getUsername())) {
             return "register";
         }
         Set<Role> roles = new HashSet<>();
@@ -61,15 +61,15 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(Model model){
+    public String login(Model model) {
         LoginMode loginMode = new LoginMode();
-        model.addAttribute("loginMode",loginMode);
+        model.addAttribute("loginMode", loginMode);
         return "login";
     }
 
-    @PostMapping ("/login")
-    public String login(@ModelAttribute ("loginMode") LoginMode loginMode, HttpSession httpSession){
-        if (validationService.validateUser(loginMode.getEmail(),loginMode.getPassword())) {
+    @PostMapping("/login")
+    public String login(@ModelAttribute("loginMode") LoginMode loginMode, HttpSession httpSession) {
+        if (validationService.validateUser(loginMode.getEmail(), loginMode.getPassword())) {
             User user = userRepository.findByUsername(loginMode.getEmail());
             if (user.getEnabled() == 1) {
                 httpSession.setAttribute("loggedUserId", user.getId());
@@ -83,7 +83,7 @@ public class UserController {
                 }
                 httpSession.setAttribute("loggedUser", loggedUser);
                 return "redirect:/donation/";
-            }else {
+            } else {
                 return "userNotActive";
             }
         }
@@ -91,8 +91,8 @@ public class UserController {
     }
 
     @GetMapping("/editUser")
-    public String editUser(HttpSession httpSession, Model model){
-        if (httpSession.getAttribute("loggedUserId")!=null) {
+    public String editUser(HttpSession httpSession, Model model) {
+        if (httpSession.getAttribute("loggedUserId") != null) {
             Optional<User> optionalUser = userRepository.findById((long) httpSession.getAttribute("loggedUserId"));
             User user = optionalUser.get();
             model.addAttribute("user", user);
@@ -100,8 +100,9 @@ public class UserController {
         }
         return "redirect:login";
     }
+
     @PostMapping("/editUser")
-    public String editUser(@ModelAttribute User user){
+    public String editUser(@ModelAttribute User user) {
         Optional<User> optionalUser = userRepository.findById(user.getId());
         Set<Role> roles = optionalUser.get().getRoles();
         user.setRoles(roles);
@@ -109,8 +110,8 @@ public class UserController {
     }
 
     @RequestMapping("/displayUser")
-    public String displayUser(HttpSession httpSession, Model model){
-        if (httpSession.getAttribute("loggedUserId")!=null) {
+    public String displayUser(HttpSession httpSession, Model model) {
+        if (httpSession.getAttribute("loggedUserId") != null) {
             Optional<User> optionalUser = userRepository.findById((long) httpSession.getAttribute("loggedUserId"));
             model.addAttribute("user", optionalUser.get());
             return "displayUser";
@@ -119,18 +120,70 @@ public class UserController {
     }
 
     @RequestMapping("/confirmRegistration")
-    public String confirmRegistration(@RequestParam (name="token") String token){
-        if (verificationTokenService.verifyUserToken(token)){
+    public String confirmRegistration(@RequestParam(name = "token") String token) {
+        if (verificationTokenService.verifyUserToken(token)) {
             return "redirect:/login";
         }
         return "incorrectToken";
     }
 
     @RequestMapping("/loggedOut")
-    public String loggedOut(HttpSession httpSession){
+    public String loggedOut(HttpSession httpSession) {
         httpSession.removeAttribute("loggedUserId");
         httpSession.removeAttribute("loggedUser");
         return "redirect:/";
     }
 
+    @GetMapping("/resetPasswordSendEmail")
+    public String resetPasswordSendEmail(Model model) {
+        String email = "";
+        model.addAttribute("email", email);
+        return "resetPasswordSendEmail";
+    }
+
+    @PostMapping("/resetPasswordSendEmail")
+    public String resetPasswordSendEmail(@ModelAttribute("email") String email) {
+        if (validationService.validateEmail(email)) {
+            User user = userRepository.findByUsername(email);
+            verificationTokenService.generateTokenForResetPassword(user);
+            return "redirect:/";
+        }
+        return "wrongEmail";
+    }
+
+    @GetMapping("/resetPassword")
+    public String resetPassword(Model model, HttpSession httpSession,@RequestParam (name="token") String token) {
+        String email = verificationTokenService.verifyUserTokenReset(token);
+        if (email.equals("")){
+            return "incorrectToken";
+        }
+        httpSession.setAttribute("email",email);
+        String password = "";
+        String password2 = "";
+        model.addAttribute("password",password);
+        model.addAttribute("password2",password);
+        return "resetPassword";
+    }
+    @PostMapping("/resetPassword")
+    public String resetPassword(@ModelAttribute ("password") String password,
+                                @ModelAttribute ("password2")String password2,
+                                HttpSession httpSession) {
+        if (!password.equals(password2)){
+            return "resetPassword";
+        }
+        User user = userRepository.findByUsername((String) httpSession.getAttribute("email"));
+        user.setPassword(password);
+        userRepository.save(user);
+        User testUser = userRepository.findByUsername((String) httpSession.getAttribute("email"));
+        return "redirect:login";
+    }
 }
+
+/*
+(@RequestParam(name = "token") String token) {
+        if (verificationTokenService.verifyUserToken(token)) {
+            return "redirect:/login";
+        }
+        return "incorrectToken";
+    }
+ */
