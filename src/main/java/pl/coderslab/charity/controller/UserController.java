@@ -10,6 +10,7 @@ import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.pojo.LoginMode;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
+import pl.coderslab.charity.service.UserService;
 import pl.coderslab.charity.service.ValidationService;
 import pl.coderslab.charity.service.VerificationTokenService;
 
@@ -30,6 +31,8 @@ public class UserController {
     private EmailServiceImpl emailServiceImpl;
     @Autowired
     private VerificationTokenService verificationTokenService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/register")
     public String register(Model model) {
