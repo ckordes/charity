@@ -10,7 +10,9 @@ import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.repository.InstitutionRepository;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
+import pl.coderslab.charity.service.UserService;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -25,6 +27,8 @@ public class AdminController {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private UserService userService;
 
     @ModelAttribute("allInstitutions")
     public List<Institution> allInstitutions() {
@@ -110,9 +114,15 @@ public class AdminController {
     }
 
     @RequestMapping("/removeAdmin/{id}")
-    public String removeAdmin(@PathVariable long id) {
+    public String removeAdmin(@PathVariable long id, HttpSession httpSession) {
+
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.get();
+        //checking if operations will be made on logged in admin
+        if (userService.checkIfAdmin(user, httpSession)){
+            return "adminModificationsNotAllowed";
+        }
+
         Set<Role> userRoles = user.getRoles();
         Role role = roleRepository.findByName("ADMIN");
         userRoles.remove(role);
@@ -142,9 +152,14 @@ public class AdminController {
     }
 
     @RequestMapping("/removeUser/{id}")
-    public String removeUser(@PathVariable long id){
+    public String removeUser(@PathVariable long id,HttpSession httpSession){
         Optional<User> optionalUser = userRepository.findById(id);
-        userRepository.delete(optionalUser.get());
+        User user = optionalUser.get();
+        //checking if operations will be made on logged in admin
+        if (userService.checkIfAdmin(user, httpSession)){
+            return "adminModificationsNotAllowed";
+        }
+        userRepository.delete(user);
         return "redirect:../manageUsers";
     }
 
