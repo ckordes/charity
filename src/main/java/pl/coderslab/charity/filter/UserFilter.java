@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(filterName = "UserFilter",urlPatterns = {"/donation/*"})
+//@WebFilter(filterName = "UserFilter",urlPatterns = {"/donation/*"})
 public class UserFilter implements Filter {
 
     @Override
