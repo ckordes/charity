@@ -48,6 +48,8 @@
           <a href="#" class="btn btn--without-border">Załóż konto</a>      
           <button class="btn" type="submit">Zaloguj się</button> 
         </div>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
       </form:form>
     </section>
 
