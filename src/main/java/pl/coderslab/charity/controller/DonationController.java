@@ -28,8 +28,6 @@ public class DonationController {
     private UserRepository userRepository;
     @Autowired
     private DonationStatusRepository donationStatusRepository;
-    @Autowired
-    private EmailServiceImpl emailService;
 
     @ModelAttribute("allCategories")
     public List<Category> allCategories(){

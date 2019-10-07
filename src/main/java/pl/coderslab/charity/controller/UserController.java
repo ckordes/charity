@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.charity.emailService.EmailServiceImpl;
 import pl.coderslab.charity.entity.Role;
 import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.pojo.LoginMode;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
-import pl.coderslab.charity.service.UserService;
 import pl.coderslab.charity.service.ValidationService;
 import pl.coderslab.charity.service.VerificationTokenService;
 
@@ -28,11 +26,7 @@ public class UserController {
     @Autowired
     private ValidationService validationService;
     @Autowired
-    private EmailServiceImpl emailServiceImpl;
-    @Autowired
     private VerificationTokenService verificationTokenService;
-    @Autowired
-    private UserService userService;
 
     @GetMapping("/register")
     public String register(Model model) {
