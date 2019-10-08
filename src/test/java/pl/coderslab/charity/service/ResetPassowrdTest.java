@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -17,15 +18,15 @@ import pl.coderslab.charity.repository.UserRepository;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = CharityApplication.class)
+//@SpringBootTest(classes = CharityApplication.class)
 //@EnableJpaRepositories(basePackages={"pl.coderslab.charity.repository"})
 //@EntityScan(basePackages={"pl.coderslab.charity.entity"})
 //@TestPropertySource("classpath:application.properties")
 //@ContextConfiguration(classes = {UserRepository.class})
-//@DataJpaTest
+@DataJpaTest
 public class ResetPassowrdTest {
 
-    @Autowired
+    @MockBean
     UserRepository userRepository;
 
     @Test
