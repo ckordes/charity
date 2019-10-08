@@ -8,7 +8,7 @@ import pl.coderslab.charity.repository.UserRepository;
 @Service
 public class ResetPassowrd {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     public boolean checkIfMailExists(String username){
         if( userRepository.findByUsername(username).equals(null)){
